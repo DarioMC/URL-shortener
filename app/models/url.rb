@@ -1,3 +1,7 @@
+require 'metainspector'
+require 'urls_controller'
+require 'base64'
+
 class Url < ApplicationRecord
 
     def generate_short_url(domain_name)

@@ -1,5 +1,5 @@
 class UrlsController < ApplicationController
-
+    #@@URL = "https://heroku.com"
     def show
 
         begin
@@ -7,13 +7,32 @@ class UrlsController < ApplicationController
           url = Url.new
           original_url = url.find_by_short_url("http://localhost:3000/" + params[:short_url]).original_url
           url.update_visits("http://localhost:3000/" + params[:short_url])
-          redirect_to original_url
+
+          #original_url = url.find_by_short_url(@@URL + params[:short_url]).original_url
+          #url.update_visits(@@URL + params[:short_url])
+    
+
+          respond_to do |format|
+            format.html { redirect_to original_url }
+            format.json { render json: {status: 'SUCCESS', data:original_url}, status: :ok }
+        end
+
     
         rescue
     
-          redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + @@DOMAIN_NAME + params[:short_url] + "\" -> is not a Short URL  0_0")
-          redirect_to controller: 'thing', action: 'edit', id: 3, something: 'else'
-    
+          #redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + @@DOMAIN_NAME + params[:short_url] + "\" -> is not a Short URL  0_0")
+          #redirect_to controller: 'thing', action: 'edit', id: 3, something: 'else'
+          respond_to do |format|
+            format.html { redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + "http://localhost:3000/" + params[:short_url] + "\" -> is not a Short URL  0_0") }
+            format.json { render json: {status: 'ERROR'}, status: :error }
+        end
+        else
+
+        respond_to do |format|
+            format.html { redirect_to shortened_path(original_url: url.original_url, short_url: url.find_duplicate.short_url, title: url.find_duplicate.title, visit_count: url.find_duplicate.visit_count, obs: "Before shortened") }
+            format.json { render json: {status: 'SUCCESS', data:url.find_duplicate.short_url}, status: :ok }
+        end
+
         end
       end
     
@@ -48,30 +67,12 @@ class UrlsController < ApplicationController
     
         url = Url.new
         @top = url.top
+
+        respond_to do |format|
+            format.html { }
+            format.json { render json: {status: 'SUCCESS', data:@top}, status: :ok }
+          end
     
       end
-
-    def shortened
-        @url = ShortenedUrl.find_by_short_url(params[:short_url])
-        host = request.host_with_port
-        orignal_url = @url.sanitize_url
-        @short_url = host + '/' + @url.short_url
-    end
-
-    def fetch_original_url
-        fetch_url = ShortenedUrl.find_by_short_url(params[:short_url])
-        redirect_to fetch_url.sanitize_url    
-    end
-      
-    private
-    
-    def find_url
-          @url = ShortenedUrl.find_by_short_url(params[:short_url])
-    end
-      
-    def url_params
-          params.require(:url).permit(:original_url)
-    end
-
 
 end
