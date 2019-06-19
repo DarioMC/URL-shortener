@@ -1,89 +1,97 @@
+require 'get_title_job'
+
 class UrlsController < ApplicationController
-    #@@URL = "https://heroku.com"
-    def show
 
-        begin
+  @@URL = "https://app.herokuapp.com/" # Url of heroku with connection
+
+  # Redirect to the page with the created Url 
+  def show
+
+    begin
     
-          url = Url.new
-          original_url = url.find_by_short_url("http://localhost:3000/" + params[:short_url]).original_url
-          url.update_visits("http://localhost:3000/" + params[:short_url])
+      url = Url.new
+      original_url = url.find_by_short_url(@@URL + params[:short_url]).original_url
+      url.update_visits(@@URL + params[:short_url])
 
-          #original_url = url.find_by_short_url(@@URL + params[:short_url]).original_url
-          #url.update_visits(@@URL + params[:short_url])
+      respond_to do |format|
+          format.html { redirect_to original_url }
+          format.json { render json: {status: 'SUCCESS', data:original_url}, status: :ok }
+      end
+
+    rescue
+
+      respond_to do |format|
+          format.html { redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + @@URL + params[:short_url] + "\" -> Url doesn't exist in the base") }
+          format.json { render json: {status: 'ERROR'}, status: :error }
+      end
+        
+    end
+  end
+
+  # Create a new URL with the original URL 
+  def create
     
+    url = Url.new
+    url.original_url = params[:original_url]
 
-          respond_to do |format|
-            format.html { redirect_to original_url }
-            format.json { render json: {status: 'SUCCESS', data:original_url}, status: :ok }
+    if url.sanitize? # Check that the URL is in the correct format
+
+      if url.find? # Check if the URL has already been shortened previously
+
+        url.short_url_algorithm()
+        url.visit_count = 0
+        url.save
+        
+        job = GetTitleJob.new
+        job.get_title(url.short_url)
+        
+        respond_to do |format|
+          format.html { redirect_to shortened_path(original_url: url.original_url, short_url: url.short_url, title: url.find_duplicate.title, visit_count: url.visit_count, obs: "New Url") }
+          format.json { render json: {status: 'SUCCESS', data:[{original_url: url.original_url, short_url: url.short_url, title: url.find_duplicate.title, visit_count: url.visit_count, obs: "New Url"}]}, status: :ok }
         end
 
-    
-        rescue
-    
-          #redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + @@DOMAIN_NAME + params[:short_url] + "\" -> is not a Short URL  0_0")
-          #redirect_to controller: 'thing', action: 'edit', id: 3, something: 'else'
-          respond_to do |format|
-            format.html { redirect_to shortened_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "\"" + "http://localhost:3000/" + params[:short_url] + "\" -> is not a Short URL  0_0") }
-            format.json { render json: {status: 'ERROR'}, status: :error }
-        end
-        else
+      else
 
         respond_to do |format|
-            format.html { redirect_to shortened_path(original_url: url.original_url, short_url: url.find_duplicate.short_url, title: url.find_duplicate.title, visit_count: url.find_duplicate.visit_count, obs: "Before shortened") }
-            format.json { render json: {status: 'SUCCESS', data:url.find_duplicate.short_url}, status: :ok }
+          format.html { redirect_to shortened_path(original_url: url.original_url, short_url: url.find_duplicate.short_url, title: url.find_duplicate.title, visit_count: url.find_duplicate.visit_count, obs: "The Url has already been shortened") }
+          format.json { render json: {status: 'SUCCESS', data:[{original_url: url.original_url, short_url: url.find_duplicate.short_url, title: url.find_duplicate.title, visit_count: url.find_duplicate.visit_count, obs: "The Url has already been shortened"}]}, status: :ok }
         end
 
-        end
       end
-    
-      # Create a Url object and set the parameters to the object
-      def create
-    
-        url = Url.new
-        url.original_url = params[:original_url]
-    
-        if url.sanitize?
-    
-          if url.find?
-    
-            url.generate_short_url("http://localhost:3000/")
-            url.visit_count = 0
-            url.save
-    
-            job = GetTitleJob.new
-            job.get_title(url.short_url)
-            redirect_to shortened_path(original_url: url.original_url, short_url: url.short_url, title: url.find_duplicate.title, visit_count: url.visit_count, obs: "New shortened")
-    
-          else
-            redirect_to shortened_path(original_url: url.original_url, short_url: url.find_duplicate.short_url, title: url.find_duplicate.title, visit_count: url.find_duplicate.visit_count, obs: "Before shortened")      
-          end
-    
-        else
-          redirect_to error_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "URL unreachable or has invalid format  (0_0)")
-        end
+
+    else
+
+      respond_to do |format|
+          format.html { redirect_to error_path(original_url: url.original_url, short_url: "", title: "", visit_count: "", obs: "Url format is invalid") }
+          format.json { render json: {status: 'ERROR'}, status: :ok }
       end
-    
-      def top
-    
-        url = Url.new
-        @top = url.top
 
-        respond_to do |format|
-            format.html { }
-            format.json { render json: {status: 'SUCCESS', data:@top}, status: :ok }
-          end
-    
-       end
+    end
+  end
 
-       def date
+  # Returns the top 100 
+  def top
 
-        url = Url.new
-        @date = url.date
-    
-        respond_to do |format|
-          format.html { }
-          format.json { render json: {status: 'SUCCESS', data:@date}, status: :ok }
-        end
-    
-      end
+    url = Url.new
+    @top = url.top
+
+    respond_to do |format|
+      format.html { }
+      format.json { render json: {status: 'SUCCESS', data:@top}, status: :ok }
+    end
+
+  end
+
+  # Returns the newest page to be cropped
+  def date
+
+    url = Url.new
+    @date = url.date
+
+    respond_to do |format|
+      format.html { }
+      format.json { render json: {status: 'SUCCESS', data:@date}, status: :ok }
+    end
+
+  end
 end
