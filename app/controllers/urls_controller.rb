@@ -73,6 +73,17 @@ class UrlsController < ApplicationController
             format.json { render json: {status: 'SUCCESS', data:@top}, status: :ok }
           end
     
-      end
+       end
 
+       def date
+
+        url = Url.new
+        @date = url.date
+    
+        respond_to do |format|
+          format.html { }
+          format.json { render json: {status: 'SUCCESS', data:@date}, status: :ok }
+        end
+    
+      end
 end
