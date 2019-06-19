@@ -51,5 +51,27 @@ class UrlsController < ApplicationController
     
       end
 
+    def shortened
+        @url = ShortenedUrl.find_by_short_url(params[:short_url])
+        host = request.host_with_port
+        orignal_url = @url.sanitize_url
+        @short_url = host + '/' + @url.short_url
+    end
+
+    def fetch_original_url
+        fetch_url = ShortenedUrl.find_by_short_url(params[:short_url])
+        redirect_to fetch_url.sanitize_url    
+    end
+      
+    private
+    
+    def find_url
+          @url = ShortenedUrl.find_by_short_url(params[:short_url])
+    end
+      
+    def url_params
+          params.require(:url).permit(:original_url)
+    end
+
 
 end
