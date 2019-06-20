@@ -2,7 +2,7 @@ require 'get_title_job'
 
 class UrlsController < ApplicationController
 
-  @@URL = "https://app.herokuapp.com/" # Url of heroku with connection
+  @@URL = "https://short_url.com/" # Url of heroku with connection
 
   # Redirect to the page with the created Url 
   def show

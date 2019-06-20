@@ -23,9 +23,11 @@
 				    <i class="material-icons prefix">link</i>
 					<input readonly type="text" id="go" value="<%= params[:short_url]%>">	
 		        </div>	
-								
-				<button class="btn green lighten-1" onclick="go()">Go!
-				    <i class="material-icons right">send</i>
+				<br>				
+				<button class="btn green lighten-1" onclick="go()">Go
+				<br>
+				<br>
+				    <!-- <i class="material-icons right">send</i> -->
 				</button>			
 				<br><br>								
 			</div>
@@ -35,19 +37,20 @@
 					<i class="material-icons left">keyboard_arrow_left</i>
 			</button>
 	      	<ul class="collection with-header">
-		        <li class="collection-header cyan darken-1 white-text"><h4>Information</h4></li>
+		        <li class="collection-header cyan darken-1 white-text"><h4>Information of the process</h4></li>
 		        <li class="collection-item">Original URL: <%= params[:original_url] %></li>
 		        <li class="collection-item">URL title: <%= params[:title] %></li>
 		        <li class="collection-item">URL visit count: <%= params[:visit_count] %></li>
 		        <li class="collection-item"><%= params[:obs] %></li>
 		    </ul>
-		    <!-- <center>
-	            <form action="#", method="post">						
+			<!-- ROUTING  ERROR ->  No route matches [POST] "/shortened" -->
+		     <center>
+	            <form action="top", method="get">						
 					<button class="btn green lighten-1" type="submit" name="action">Top
 				    	<i class="material-icons right">sort</i>
 				    </button>
 				</form>
-			</center> -->
+			</center>
 		</div>
 		<script>
 			function go() {

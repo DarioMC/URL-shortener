@@ -4,7 +4,7 @@ require 'base64'
 
 class Url < ApplicationRecord
 
-  @@URL = "https://app.herokuapp.com/"
+  @@URL = "https://short_url.com/"
 
 ##
 ##
