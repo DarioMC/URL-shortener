@@ -2,9 +2,10 @@ require 'get_title_job'
 
 class UrlsController < ApplicationController
 
-  @@URL = "https://short_url.com/" # Url of heroku with connection
+  @@URL = "https://short_url.com/" 
 
   # Redirect to the page with the created Url 
+  # Return query in JSON format
   def show
 
     begin
@@ -28,15 +29,17 @@ class UrlsController < ApplicationController
     end
   end
 
-  # Create a new URL with the original URL 
+  # Create a new URL with the original URL
+  # Return query in JSON format 
   def create
     
     url = Url.new
     url.original_url = params[:original_url]
 
-    if url.sanitize? # Check that the URL is in the correct format
-
-      if url.find? # Check if the URL has already been shortened previously
+    #Validate that the URL is in the correct format
+    if url.sanitize?
+      #Validate URL has already been shortened previously
+      if url.find? 
 
         url.short_url_algorithm()
         url.visit_count = 0
@@ -69,7 +72,8 @@ class UrlsController < ApplicationController
     end
   end
 
-  # Returns the top 100 
+  # Returns the top 100 URLs most visited pages with shortened link in the app
+  # Returns the query in json format
   def top
 
     url = Url.new
@@ -83,6 +87,7 @@ class UrlsController < ApplicationController
   end
 
   # Returns the newest page to be cropped
+  # Returns the query in json format
   def date
 
     url = Url.new

@@ -7,46 +7,56 @@
       	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	</head>
 	<body>
-		<nav>
-	    	<div class="nav-wrapper cyan darken-3">	    		
-	      		<a href="" class="brand-logo">
-	      			<i class="material-icons prefix">short_text</i>ShortenIt!
-	      		</a>      	
-	    	</div>
-	    </nav>
+
+		<!-- Header -->
+  		<header class="bg-primary py-5 mb-5">
+    			<div class="container h-100">
+      				<div class="row h-100 align-items-center">
+        				<div class="col-lg-12">
+          				<h1 class="display-4 text-white mt-5 mb-2"><b>URL Shortener App<b></h1>
+					</div>
+      			</div>
+    		</div>
+  		</header>
+
 		<center>
 			<div class="container">
 				<br>
-				<h2>Your URL was shortened</h2>
-				<h3>Shortened URL:</h3>
+				<h2 style="color:blue;">Your URL was shortened</h2>
+				<hr/>
+				<label for="go">
+					<h4 style="color:blue;"> Shortened URL:</h4>
+				</label>
 				<div class="input-field col s6">
 				    <i class="material-icons prefix">link</i>
-					<input readonly type="text" id="go" value="<%= params[:short_url]%>">	
+					<input readonly type="text" id="go" value="<%= params[:short_url]%>", size ="40", placeholder="URL">	
 		        </div>	
 				<br>				
-				<button class="btn green lighten-1" onclick="go()">Go
-				<br>
-				<br>
-				    <!-- <i class="material-icons right">send</i> -->
+				<button class="btn btn-primary" onclick="go()">Visit URL  
+				    <i class="material-icons right">arrow_forward</i>
 				</button>			
 				<br><br>								
 			</div>
 		</center>	
 		<div class="container">			
-			<button class="btn red darken-3" onclick="window.history.back();">Back
+			<button class="btn btn-primary" onclick="window.history.back();">Back
 					<i class="material-icons left">keyboard_arrow_left</i>
 			</button>
+			<hr/>
+			<center>
+		        <h4 style="color:blue;"><b>URL information</b></h4>
+			</center>
+			<hr/>
 	      	<ul class="collection with-header">
-		        <li class="collection-header cyan darken-1 white-text"><h4>Information of the process</h4></li>
-		        <li class="collection-item">Original URL: <%= params[:original_url] %></li>
-		        <li class="collection-item">URL title: <%= params[:title] %></li>
-		        <li class="collection-item">URL visit count: <%= params[:visit_count] %></li>
+		        <li class="collection-item"><b>Original URL:</b> <%= params[:original_url] %></li>
+		        <li class="collection-item"><b>URL title:</b> <%= params[:title] %></li>
+		        <li class="collection-item"><b>URL visit count:</b> <%= params[:visit_count] %></li>
 		        <li class="collection-item"><%= params[:obs] %></li>
 		    </ul>
-			<!-- ROUTING  ERROR ->  No route matches [POST] "/shortened" -->
+			<hr/>
 		     <center>
 	            <form action="top", method="get">						
-					<button class="btn green lighten-1" type="submit" name="action">Top
+					<button class="btn btn-primary" type="submit" name="action">Top URLs most visited
 				    	<i class="material-icons right">sort</i>
 				    </button>
 				</form>

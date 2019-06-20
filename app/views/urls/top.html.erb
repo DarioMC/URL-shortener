@@ -7,31 +7,34 @@
       	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	</head>
 	<body>
-		<nav>
-	    	<div class="nav-wrapper cyan darken-3">	    		
-	      		<a href="" class="brand-logo">
-	      			<i class="material-icons prefix">short_text</i>ShortenIt!
-	      		</a>      		
-	    	</div>
-	    </nav>
-		<center>
-			<h2>TOP 100 of URLs_Shortener</h2>
-		</center>
+
+		<!-- Header -->
+  		<header class="bg-primary py-5 mb-5">
+    		<div class="container h-100">
+      		<div class="row h-100 align-items-center">
+        	<div class="col-lg-12">
+          		<h3 class="display-4 text-white mt-5 mb-2"><b>TOP 100 Shortened URLs most visited</b></h3>
+			</div>
+      		</div>
+    		</div>
+  		</header>
+		  <br>
 		<div class="container">
-			<button class="btn red darken-3" onclick="window.history.back();">Back
+			<button class="btn btn-primary" onclick="window.history.back();">Back
 					<i class="material-icons left">keyboard_arrow_left</i>
 			</button>
+			<hr/>
 			<% 
 			counter = 1
 			@top.each do |top| %>
 				<ul class="collection with-header">
-				   <li class="collection-header cyan darken-1 white-text"><h6>Position <%= counter %></h6></li>
-				   <li class="collection-item"><h6>URL original: <%= top.original_url %></h6></li>
-				   <li class="collection-item"><h6>Title: <%= top.title %></h4></li>
-				   <li class="collection-item"><h6>Short URL: <%= top.short_url %></h6></li>
-				   <li class="collection-item"><h6>Visit count: <b><%= top.visit_count %></h6></li>
+				   <li class="collection-header cyan darken-1 white-text"><h6><b>Position</b> <%= counter %></h6></li>
+				   <li class="collection-item"><h6><b>URL original:</b> <%= top.original_url %></h6></li>
+				   <li class="collection-item"><h6><b>Title:<b> <%= top.title %></h4></li>
+				   <li class="collection-item"><h6><b>Short URL:</b> <%= top.short_url %></h6></li>
+				   <li class="collection-item"><h6><b>Visit count: </b><%= top.visit_count %></h6></li>
 				</ul>
-				<p>--------------------------------------------------------------------------------------------</p>
+				<p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 			<%
 			counter += 1
 			end %>
