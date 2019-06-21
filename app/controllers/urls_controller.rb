@@ -2,7 +2,7 @@ require 'get_title_job'
 
 class UrlsController < ApplicationController
 
-  @@URL = "https://short_url.com/" 
+  @@URL = "https://URL-shortener.herokuapp.com/" 
 
   # Redirect to the page with the created Url 
   # Return query in JSON format
