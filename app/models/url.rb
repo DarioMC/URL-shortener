@@ -4,7 +4,7 @@ require 'base64'
 
 class Url < ApplicationRecord
 
-  @@URL = "https://URL-shortener.herokuapp.com/"
+  @@URL = "https://urlshortened.herokuapp.com/"
 
 =begin
   This algorithm takes the original URL of the page, then uses base64 module.
