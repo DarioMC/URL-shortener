@@ -3,7 +3,7 @@
 
 ## Full Stack Challenge 2019
 
-project specification: https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUfBPW2yZyS/view?usp=sharing
+project specification: [link](https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUfBPW2yZyS/view?usp=sharing)
 
 
 # API 
@@ -16,7 +16,7 @@ project specification: https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUf
 
 # Installation steps 
 
-* Linux Ubuntu 18.04:  https://gorails.com/setup/ubuntu/18.04
+* Linux Ubuntu 18.04:  [link](https://gorails.com/setup/ubuntu/18.04)
 
 
 # Project features
@@ -28,8 +28,9 @@ project specification: https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUf
 * Then makes a Join them and verify if this new URL exists in the database.
 * If it exists, recalculate the URL but take one more character
 
+```ruby
 def shortUrlAlgorithm()
-    uniqueIdLength = 3\
+    uniqueIdLength = 3
 
     loop do
         self.shortUrl = @@URL + (Base64.encode64(self.original_url).split('')).sample(uniqueIdLength).join()
@@ -41,6 +42,7 @@ def shortUrlAlgorithm()
         end
     end
 end
+```
 
 * Check the gem file to verify the gems used
 
