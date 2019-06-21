@@ -8,6 +8,8 @@ Project specification: [link](https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7Z
 
 # API 
 
+* ULR Shortener API: [link](https://urlshortened.herokuapp.com/)
+
 
 # Ruby and rails version
 
