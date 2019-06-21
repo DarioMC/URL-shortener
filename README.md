@@ -3,7 +3,7 @@
 
 ## Full Stack Challenge 2019
 
-project specification: [link](https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUfBPW2yZyS/view?usp=sharing)
+Project specification: [link](https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7ZVqYbdUfBPW2yZyS/view?usp=sharing)
 
 
 # API 
@@ -51,11 +51,11 @@ end
 * cd into application directory
 * Execute:
 
-    bundle install
-    rails db:setup
-    rails server
+* bundle install
+* rails db:setup
+* rails server
 
-*Open browser and visit the link:  localhost:3000
+* Open browser and visit the link:  localhost:3000
 
 
 
