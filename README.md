@@ -31,13 +31,13 @@ Project specification: [link](https://drive.google.com/file/d/1-gHa7VPbuXiPVAZ7Z
 * If it exists, recalculate the URL but take one more character
 
 ```ruby
-def shortUrlAlgorithm()
+def shortenerUrlAlgorithm()
     uniqueIdLength = 3
 
     loop do
-        self.shortUrl = @@URL + (Base64.encode64(self.original_url).split('')).sample(uniqueIdLength).join()
+        self.shortUrl = @@URL + (Base64.encode64(self.originalUrl).split('')).sample(uniqueIdLength).join()
 
-        if Url.findByShortUrl(self.short_url).nil?
+        if Url.findByShortUrl(self.shortUrl).nil?
              break
         else
              uniqueIdLength = uniqueIdLength + 1
@@ -46,7 +46,7 @@ def shortUrlAlgorithm()
 end
 ```
 
-* Check the gem file to verify the gems used
+* Check the **Gemfile** to verify the gems used
 
 # Run local app in Ubuntu
 
@@ -60,5 +60,46 @@ end
 * Open browser and visit the link:  localhost:3000
 
 
+
+#Curl commants examples
+
+
+# top 100 of the most visited pages in the app 
+
+- top GET method
+
+```bash
+$ curl https://urlshortened.herokuapp.com/top.json
+```
+
+# Receives the original URL of the page and returns a json with the characteristics and including the shortened URL 
+
+- create POST method  
+
+```bash
+$ curl -X POST -d "original_url=https://www.youtube.com/" https://urlshortened.herokuapp.com/urls/create.json
+```
+
+
+# Shows the page consulted by means of the shortened URL, returns the page information 
+
+- show GET method
+
+```bash
+$ curl https://urlshortened.herokuapp.com/Vje.json
+```
+
+
+# Display the newest page entered into the app 
+
+- date GET method
+
+```bash
+$ curl https://urlshortened.herokuapp.com/date.json
+```
+
+
+
+*  If you want to verify these commands in the browser remove the word **curl** and **.json**
 
 
