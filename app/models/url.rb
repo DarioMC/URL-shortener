@@ -7,17 +7,25 @@ class Url < ApplicationRecord
   @@URL = "https://urlshortened.herokuapp.com/"
 
 =begin
-  This algorithm takes the original URL of the page, then uses base64 module.
-  It concatenates to a string formed by 3 characters chosen at random from the same base.
-  After that, join them and verify if this new URL exists in the database.
-  If it exists, recalculate the URL but take one more character.
+   Takes the original URL of the page, uses base64 module.
+   Concatenates to a string formed by 3 characters chosen at random from the data base.
+   Then makes a Join them and verify if this new URL exists in the database.
+   Base64 has the characters `+` and `/` that are not safe for a URL, 
+   therefore, the `gsub` method will be used to replace these elements with `-` and `_` respectively.
+   If it exists, recalculate the URL but take one more character
 =end
-  def short_url_algorithm()
 
+
+
+  def short_url_algorithm()
+    
     unique_id_length = 3
+    base64 =   Base64.encode64(self.original_url)
+    join_url = (base64.split('')).sample(unique_id_length).join()
+    safe_url = join_url.gsub("+", "-").gsub("/","_")
     
     loop do 
-      self.short_url = @@URL + (Base64.encode64(self.original_url).split('')).sample(unique_id_length).join()
+      self.short_url = @@URL + safe_url
       
       if Url.find_by_short_url(self.short_url).nil?
         break

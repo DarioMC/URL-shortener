@@ -53,6 +53,10 @@ gem 'sidekiq'
 # https://www.rubydoc.info/gems/metainspector/4.2.1
 gem 'metainspector'
 
+gem 'base62-rb'
+
+gem 'base62'
+
 gem 'jquery-rails'
 
 gem 'bootstrap-sass'

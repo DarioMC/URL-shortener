@@ -49,6 +49,8 @@ GEM
     arel (9.0.0)
     autoprefixer-rails (9.6.0)
       execjs
+    base62 (1.0.0)
+    base62-rb (0.3.1)
     bindex (0.7.0)
     bootsnap (1.4.4)
       msgpack (~> 1.0)
@@ -273,6 +275,8 @@ PLATFORMS
   x86-mswin32
 
 DEPENDENCIES
+  base62
+  base62-rb
   bootsnap (>= 1.1.0)
   bootstrap-sass
   byebug
